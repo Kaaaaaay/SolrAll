@@ -1,0 +1,11 @@
+D:\A_Test\SolrApi\SolrApi\SolrApi\bin\Debug\netcoreapp2.0\SolrApi.deps.json
+D:\A_Test\SolrApi\SolrApi\SolrApi\bin\Debug\netcoreapp2.0\SolrApi.runtimeconfig.json
+D:\A_Test\SolrApi\SolrApi\SolrApi\bin\Debug\netcoreapp2.0\SolrApi.runtimeconfig.dev.json
+D:\A_Test\SolrApi\SolrApi\SolrApi\bin\Debug\netcoreapp2.0\SolrApi.dll
+D:\A_Test\SolrApi\SolrApi\SolrApi\bin\Debug\netcoreapp2.0\SolrApi.pdb
+D:\A_Test\SolrApi\SolrApi\SolrApi\obj\Debug\netcoreapp2.0\SolrApi.csproj.CoreCompileInputs.cache
+D:\A_Test\SolrApi\SolrApi\SolrApi\obj\Debug\netcoreapp2.0\SolrApi.AssemblyInfoInputs.cache
+D:\A_Test\SolrApi\SolrApi\SolrApi\obj\Debug\netcoreapp2.0\SolrApi.AssemblyInfo.cs
+D:\A_Test\SolrApi\SolrApi\SolrApi\obj\Debug\netcoreapp2.0\SolrApi.dll
+D:\A_Test\SolrApi\SolrApi\SolrApi\obj\Debug\netcoreapp2.0\SolrApi.pdb
+D:\A_Test\SolrApi\SolrApi\SolrApi\obj\Debug\netcoreapp2.0\SolrApi.csprojAssemblyReference.cache
