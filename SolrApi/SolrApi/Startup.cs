@@ -16,7 +16,7 @@ namespace SolrApi
     {
         public Startup(IConfiguration configuration)
         {
-            SolrNet.Startup.Init<SearchItem>("http://localhost:8983/solr/ssp_select");
+            SolrNet.Startup.Init<SearchItem>("http://ssp.southeastasia.cloudapp.azure.com:8983/solr/my_core");
             Configuration = configuration;
         }
 

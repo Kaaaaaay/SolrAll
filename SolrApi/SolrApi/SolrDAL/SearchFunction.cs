@@ -27,11 +27,9 @@ namespace SolrApi.SolrDAL
         }
         public SolrQueryResults<SearchItem> SearchList(string name) {
             var extraParams = new List<KeyValuePair<string, string>>();
-
             extraParams.Add(new KeyValuePair<string, string>("bf", "Hopes^10"));
             extraParams.Add(new KeyValuePair<string, string>("defType", "edismax"));
             extraParams.Add(new KeyValuePair<string, string>("qf", "Name^5"));
-
 
             QueryOptions options = new QueryOptions();
             options.Rows = 10;

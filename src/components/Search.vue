@@ -71,6 +71,7 @@
                 v-model="state1"
                 :fetch-suggestions="querySearch"
                 placeholder="Please enter keywords for search"
+                @select="handleEnter"
                 @keyup.enter.native="handleEnter"
                 clearable
               >
@@ -78,30 +79,34 @@
               </el-autocomplete>
             </el-col>
             <el-col :span="4">
-              <el-select v-model="mode" placeholder="Mode">
+              <el-select v-model="mode" placeholder="Mode" clearable @change="handleModeChange">
                 <el-option
                   v-for="item in modes"
-                  :key="item.value"
+                  :key="item.label"
                   :label="item.label"
-                  :value="item.value"
+                  :value="item.label"
                 ></el-option>
               </el-select>
             </el-col>
             <el-col :span="4">
-              <el-select v-model="categorie" placeholder="Categories">
+              <el-select
+                v-model="categorie"
+                placeholder="Categories"
+                clearable
+                @change="handleCateChange"
+              >
                 <el-option
                   v-for="item in categories"
-                  :key="item.value"
+                  :key="item.label"
                   :label="item.label"
-                  :value="item.value"
+                  :value="item.label"
                 ></el-option>
               </el-select>
             </el-col>
           </el-row>
         </div>
 
-        <el-table :data="sppData"
-        stripe style="width: 100%">
+        <el-table :data="sppData" stripe style="width: 100%">
           <el-table-column width="180">
             <template slot-scope="scope">
               <img
@@ -112,53 +117,39 @@
           </el-table-column>
           <el-table-column width="360">
             <template slot-scope="scope">
-            <el-row>
-              <span style="color:#000">
-                {{scope.row.name}}
-              </span>
-            </el-row>
-            <el-row>
-              <span>
-                SUV
-              </span>
-            </el-row>
-            <el-row>
-              <span>
-                G-class
-              </span>
-            </el-row>
+              <el-row>
+                <span style="color:#000">{{scope.row.name}}</span>
+              </el-row>
+              <el-row>
+                <span>{{scope.row.categorie}}</span>
+              </el-row>
+              <el-row>
+                <span>{{scope.row.class}}</span>
+              </el-row>
+            </template>
+          </el-table-column>
+          <el-table-column width="180">
+            <template slot-scope="scope">
+              <el-row>
+                <span>{{scope.row.vender}}</span>
+              </el-row>
+            </template>
+          </el-table-column>
+          <el-table-column width="180">
+            <template slot-scope="scope">
+              <el-row>
+                <span>{{scope.row.pn}}</span>
+              </el-row>
             </template>
           </el-table-column>
           <el-table-column width="180">
             <template>
-            <el-row>
-              <span>
-                Vendor Name
-              </span>
-            </el-row>
-            </template>
-          </el-table-column>
-          <el-table-column width="180">
-            <template>
-            <el-row>
-              <span>
-                PN Name
-              </span>
-            </el-row>
-            </template>
-          </el-table-column>
-          <el-table-column width="180">
-            <template>
-            <el-row>
-              <a href="">
-                Approve
-              </a>
-            </el-row>
-            <el-row>
-              <a href="">
-                Reject
-              </a>
-            </el-row>
+              <el-row>
+                <a href>Approve</a>
+              </el-row>
+              <el-row>
+                <a href>Reject</a>
+              </el-row>
             </template>
           </el-table-column>
         </el-table>
@@ -167,37 +158,157 @@
   </el-container>
 </template>
 <script>
-import image1 from "../assets/bigblack.png";
-import image2 from "../assets/bigbrown.png";
-import image3 from "../assets/middlewhite.png";
-import image4 from "../assets/redsmall.png";
+import C209_coupe_C from "../assets/C209_coupe_C.jpg";
+import C213_saloon_E from "../assets/C213_saloon_E.jpg";
+import C215_coupe_CL from "../assets/C215_coupe_CL.jpg";
+import C257_sedan_C from "../assets/C257_sedan_C.jpg";
+import Citan_MPV_C from "../assets/Citan_MPV_C.jpg";
+import G63 from "../assets/G63 AMG_SUT_G.jpg";
+import MB100_Van_M from "../assets/MB100_Van_M.jpg";
+import GT_coupe_GT from "../assets/Mercedes-AMG GT_coupe_GT.jpg";
+import Vito_Van_V from "../assets/Vito_Van_V.jpg";
+import W177_hatchback_A from "../assets/W177_hatchback_A.jpg";
+import W212_Saloon_E from "../assets/W212_Saloon_E.jpg";
+import W213_coupe_E from "../assets/W213_coupe_E.jpg";
+import W218_sedan_C from "../assets/W218_sedan_C.jpg";
+import W221_sedan_C from "../assets/W221_sedan_C.jpg";
+import W222_sedan_S from "../assets/W222_sedan_S.jpg";
+import X164_SUV_GL from "../assets/X164_SUV_GL.jpg";
 import { search } from "@/api/searchApi";
 import { edit } from "@/api/searchApi";
 
 export default {
   data() {
     return {
-      sppData:[],
+      sppData: [],
       tableData: [
         {
-          srcdata: image1,
-          name: "New G-Class Off-road Vehicle",
-          address: "上海市普陀区金沙江路 1518 弄"
+          srcdata: C209_coupe_C,
+          name: "C209",
+          class: "C-Class",
+          categories: "Coupe",
+          vender: "Jack",
+          pn: "Adison"
         },
         {
-          srcdata: image2,
-          name: "New G-Class Off-road Vehicle",
-          address: "上海市普陀区金沙江路 1517 弄"
+          srcdata: C213_saloon_E,
+          name: "C213",
+          class: "E-Class",
+          categories: "Saloon",
+          vender: "Jack",
+          pn: "Adison"
         },
         {
-          srcdata: image3,
-          name: "The new A-Class",
-          address: "上海市普陀区金沙江路 1519 弄"
+          srcdata: C215_coupe_CL,
+          name: "C215",
+          class: "CL-Class",
+          categories: "Coupe",
+          vender: "Jack",
+          pn: "Adison"
         },
         {
-          srcdata: image4,
-          name: "New G-Class",
-          address: "上海市普陀区金沙江路 1516 弄"
+          srcdata: C257_sedan_C,
+          name: "C257",
+          class: "C-Class",
+          categories: "Sedan",
+          vender: "Jack",
+          pn: "Adison"
+        },
+        {
+          srcdata: Citan_MPV_C,
+          name: "Citan",
+          class: "C-Class",
+          categories: "MPV",
+          vender: "Jack",
+          pn: "Adison"
+        },
+        {
+          srcdata: G63,
+          name: "G63",
+          class: "G-Class",
+          categories: "AMG",
+          vender: "Jack",
+          pn: "Adison"
+        },
+        {
+          srcdata: MB100_Van_M,
+          name: "MB100",
+          class: "M-Class",
+          categories: "Van",
+          vender: "Jack",
+          pn: "Adison"
+        },
+        {
+          srcdata: GT_coupe_GT,
+          name: "GT",
+          class: "GT-Class",
+          categories: "Coupe",
+          vender: "Jack",
+          pn: "Adison"
+        },
+        {
+          srcdata: Vito_Van_V,
+          name: "Vito",
+          class: "V-Class",
+          categories: "Van",
+          vender: "Jack",
+          pn: "Adison"
+        },
+        {
+          srcdata: W177_hatchback_A,
+          name: "W177",
+          class: "A-Class",
+          categories: "Hatchback",
+          vender: "Jack",
+          pn: "Adison"
+        },
+        {
+          srcdata: W212_Saloon_E,
+          name: "W212",
+          class: "E-Class",
+          categories: "Saloon",
+          vender: "Jack",
+          pn: "Adison"
+        },
+        {
+          srcdata: W213_coupe_E,
+          name: "W213",
+          class: "E-Class",
+          categories: "Coupe",
+          vender: "Jack",
+          pn: "Adison"
+        },
+        {
+          srcdata: W218_sedan_C,
+          name: "W218",
+          class: "C-Class",
+          categories: "Sedan",
+          vender: "Jack",
+          pn: "Adison"
+        },
+        {
+          srcdata: W221_sedan_C,
+          name: "W221",
+          class: "C-Class",
+          categories: "Sedan",
+          vender: "Jack",
+          pn: "Adison"
+        },
+        {
+          srcdata: W222_sedan_S,
+          name: "W222",
+          class: "S-Class",
+          categories: "Sedan",
+          vender: "Jack",
+          pn: "Adison"
+        },
+        {
+          srcdata: X164_SUV_GL,
+          name: "X164",
+          class: "GL-Class",
+          categories: "SUV",
+          vender: "Jack",
+          pn: "Adison"
         }
       ],
       restaurants: [],
@@ -225,6 +336,30 @@ export default {
         );
       };
     },
+    handleModeChange() {
+      if (this.mode) {
+        this.sppData = [];
+        this.tableData.forEach(car => {
+          if (this.mode === car.class) {
+            this.sppData.push(car);
+          }
+        });
+      } else {
+        this.sppData = this.tableData;
+      }
+    },
+    handleCateChange() {
+      if (this.categorie) {
+        this.sppData = [];
+        this.tableData.forEach(car => {
+          if (this.categorie === car.categories) {
+            this.sppData.push(car);
+          }
+        });
+      } else {
+        this.sppData = this.tableData;
+      }
+    },
     loadPriorityAll() {
       var name = this.state1 ? this.state1 : "*";
       this.restaurants = [];
@@ -241,20 +376,25 @@ export default {
     },
     loadModes() {
       return [
-        { value: "1", label: "Mode1" },
-        { value: "2", label: "Mode2" },
-        { value: "3", label: "Mode3" },
-        { value: "4", label: "Mode4" },
-        { value: "5", label: "Mode5" }
+        { value: "1", label: "A-Class" },
+        { value: "2", label: "C-Class" },
+        { value: "3", label: "E-Class" },
+        { value: "4", label: "GL-Class" },
+        { value: "5", label: "S-Class" },
+        { value: "6", label: "M-Class" },
+        { value: "7", label: "G-Class" }
       ];
     },
     loadCategories() {
       return [
-        { value: "1", label: "Categories1" },
-        { value: "2", label: "Categories2" },
-        { value: "3", label: "Categories3" },
-        { value: "4", label: "Categories4" },
-        { value: "5", label: "Categories5" }
+        { value: "1", label: "Coupe" },
+        { value: "2", label: "Saloon" },
+        { value: "3", label: "MPV" },
+        { value: "4", label: "Sedan" },
+        { value: "5", label: "AMG" },
+        { value: "6", label: "Van" },
+        { value: "7", label: "SUV" },
+        { value: "8", label: "Hatchback" }
       ];
     },
     handleEnter() {
@@ -262,19 +402,25 @@ export default {
       this.restaurants.forEach(element => {
         if (element.value === name) edit(element.key);
       });
-      var mainSkuRandom = Math.round(Math.random(3))
-      this.sppData=[];
-      this.sppData.push(this.tableData[mainSkuRandom])
+      this.sppData = [];
+      this.tableData.forEach(car => {
+        if (this.state1 === car.name) {
+          this.sppData.push(car);
+        }
+      });
     }
   },
   mounted() {
     this.loadPriorityAll();
-    this.sppData=this.tableData;
+    this.sppData = this.tableData;
     this.modes = this.loadModes();
     this.categories = this.loadCategories();
   },
   watch: {
-    state1() {
+    state1(newVal) {
+      if (!newVal) {
+        this.sppData = this.tableData;
+      }
       this.loadPriorityAll();
     }
   }
@@ -332,3 +478,6 @@ html {
   height: 100%;
 }
 </style>
+
+
+ 

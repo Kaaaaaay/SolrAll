@@ -24,7 +24,7 @@ namespace SolrApi.Controllers
         [HttpGet]
         public IEnumerable<string> Get()
         {
-            return new string[] { "value1", "value2" };
+            return new string[] { "Server is Ok." };
         }
 
         // GET api/values/5
@@ -34,6 +34,9 @@ namespace SolrApi.Controllers
             var result=searchFunction.SearchList("Name:*"+name+"*");
             List<SearchItem> list = new List<SearchItem>();
             foreach (var item in result) {
+                var rn = item.Name;
+                rn=rn.Replace(name, "<b>" + name + "</b>");
+                item.Name = rn;
                 list.Add(item);
             }
             return list;

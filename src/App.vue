@@ -1,6 +1,5 @@
 <template>
   <div id="app" style="margin: 0;">
-    <img alt="Vue logo" src="./assets/logo.png">
     <Search msg="Welcome to Your Vue.js App"/>
   </div>
 </template>
